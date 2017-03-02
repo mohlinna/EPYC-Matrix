@@ -80,4 +80,4 @@ def print_matrix(m):
 def numToLetter(i):
 	return str(unichr(i+97))
 
-epyc_matrix(12)
+epyc_matrix(8)
