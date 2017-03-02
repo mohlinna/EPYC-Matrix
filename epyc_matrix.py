@@ -33,25 +33,40 @@ def find_next_element(n, m, f, lic, lir, row):
 		if column == (n-1):
 			#print "Incrementing row_next"
 			row_next = row + 1
-		for r in reversed(lir_iterate):
-			#print "Testing %s" % numToLetter(r)
-			if r in lic[column] and r not in f[previous]:
-				#print "   %s works!" % numToLetter(r)
-				m[row].append(r)
-				lir[row].remove(r)
-				lic[column].remove(r)
-				f[previous].add(r)
+		if column < row:
+			value = m[column][row]
+			if value in lir[row] and value in lic[column] and value not in f[previous]:
+				m[row].append(value)
+				lir[row].remove(value)
+				lic[column].remove(value)
+				f[previous].add(value)
 				
 				find_next_element(n, m, f, lic, lir, row_next)
 				
-				f[previous].remove(r)
-				lic[column].add(r)
-				lir[row].append(r)
+				f[previous].remove(value)
+				lic[column].add(value)
+				lir[row].append(value)
 				m[row].pop()
-			#elif r not in lic[column]:
-			#	print "   %s already used in column %d" % (numToLetter(r), column)
-			#elif r in f[previous]:
-			#	print "   %s has already followed %s" % (numToLetter(r), numToLetter(previous))
+		else:
+			for r in reversed(lir_iterate):
+				#print "Testing %s" % numToLetter(r)
+				if r in lic[column] and r not in f[previous]:
+					#print "   %s works!" % numToLetter(r)
+					m[row].append(r)
+					lir[row].remove(r)
+					lic[column].remove(r)
+					f[previous].add(r)
+					
+					find_next_element(n, m, f, lic, lir, row_next)
+					
+					f[previous].remove(r)
+					lic[column].add(r)
+					lir[row].append(r)
+					m[row].pop()
+				#elif r not in lic[column]:
+				#	print "   %s already used in column %d" % (numToLetter(r), column)
+				#elif r in f[previous]:
+				#	print "   %s has already followed %s" % (numToLetter(r), numToLetter(previous))
 	
 def print_matrix(m):
 	print
@@ -65,4 +80,4 @@ def print_matrix(m):
 def numToLetter(i):
 	return str(unichr(i+97))
 
-epyc_matrix(10)
+epyc_matrix(12)
